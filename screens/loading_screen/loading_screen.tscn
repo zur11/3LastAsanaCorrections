@@ -1,0 +1,86 @@
+[gd_scene load_steps=9 format=3 uid="uid://b4n41kmtybwqn"]
+
+[ext_resource type="Script" path="res://screens/loading_screen/loading_screen.gd" id="1_ti8cj"]
+[ext_resource type="PackedScene" uid="uid://ch80xmnv4dmtb" path="res://screens/loading_screen/loading_animation/loading_animation.tscn" id="2_6kal7"]
+[ext_resource type="Texture2D" uid="uid://cq2h1wsqyivir" path="res://screens/loading_screen/assets/logo_small.png" id="3_8dbqn"]
+[ext_resource type="PackedScene" uid="uid://cw5i53clevpnv" path="res://screens/loading_screen/animated_background/animated_background.tscn" id="5_wh8xf"]
+[ext_resource type="FontFile" uid="uid://3iv2fk2whit2" path="res://assets/fonts/Molot.otf" id="7_kdn00"]
+[ext_resource type="PackedScene" uid="uid://kaumcd515jsx" path="res://screens/loading_screen/loading_animation/loading_animation_nazi.tscn" id="9_xr7nt"]
+
+[sub_resource type="Animation" id="Animation_j6fg5"]
+resource_name = "_label_loop"
+length = 1.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LoadingLabel:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": ["Loading", "Loading.", "Loading..", "Loading..."]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_aeska"]
+_data = {
+"_label_loop": SubResource("Animation_j6fg5")
+}
+
+[node name="LoadingScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ti8cj")
+
+[node name="AnimatedBackground" parent="." instance=ExtResource("5_wh8xf")]
+layout_mode = 0
+
+[node name="LogoTexture" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 237.0
+offset_top = 10.0
+offset_right = 1276.0
+offset_bottom = 198.0
+texture = ExtResource("3_8dbqn")
+
+[node name="LoadingLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 834.0
+offset_top = 814.0
+offset_right = 1099.0
+offset_bottom = 895.0
+theme_override_colors/font_color = Color(1, 1, 1, 0.662745)
+theme_override_fonts/font = ExtResource("7_kdn00")
+theme_override_font_sizes/font_size = 60
+text = "Loading"
+horizontal_alignment = 1
+
+[node name="LoadingAnimationsContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 636.0
+offset_top = 979.0
+offset_right = 1335.0
+offset_bottom = 982.0
+
+[node name="LoadingAnimation1" parent="LoadingAnimationsContainer" instance=ExtResource("2_6kal7")]
+
+[node name="LoadingAnimation2" parent="LoadingAnimationsContainer" instance=ExtResource("2_6kal7")]
+position = Vector2(215, 0)
+
+[node name="LoadingAnimation3" parent="LoadingAnimationsContainer" instance=ExtResource("9_xr7nt")]
+position = Vector2(430, 0)
+
+[node name="LoadingAnimation4" parent="LoadingAnimationsContainer" instance=ExtResource("9_xr7nt")]
+position = Vector2(645, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_aeska")
+}
+autoplay = "_label_loop"
